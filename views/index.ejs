@@ -16,6 +16,12 @@
           <a href="/sutemenyek/<%= suti.id %>">
             <%= suti.nev %>
           </a>
+          <form method="post" action="/sutemenyek/<%= suti.id %>?_method=DELETE">
+            <button type="submit">Törlés</button>
+          </form>
+          <form method="post" action="/sutemenyek/modosit/<%= suti.id %>">
+            <button type="submit">Módosítás</button>
+          </form>
         </li>
       <% }) %>
     </ul>

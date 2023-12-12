@@ -1,4 +1,4 @@
-import { Body, Controller, Get, InternalServerErrorException, Param, Post, Redirect, Render } from '@nestjs/common';
+import { Body, Controller, Delete, Get, InternalServerErrorException, Param, Post, Redirect, Render } from '@nestjs/common';
 import { AppService } from './app.service';
 import * as mysql from 'mysql2';
 import { UjSutiDto } from './UjSutiDto';
@@ -56,4 +56,36 @@ export class AppController {
     );
     return { ujSuti };
   }
+
+  @Delete('/sutemenyek/:id')
+  @Redirect('/')
+  async deleteSuti(@Param('id') id: number) {
+    const [adatok] = await conn.execute(
+      'DELETE FROM sutemenyek WHERE id = ?', [id]);
+  }
+
+  @Get('/sutemenyek/modosit/:id')
+  @Render('/modosit')
+  async modositandoSuti(@Param('id') id: number) {
+    const [adatok] = await conn.execute(
+      'SELECT id, nev, ar, leiras FROM sutemenyek WHERE id = ?',
+      [id],
+    );
+    const modositando = adatok[0];
+    return modositando;
+  }
+
+  @Post('/sutemenyek/edit/:id')
+  @Redirect('/')
+  async editSutiForm(@Body() modosultSuti: UjSutiDto, @Param('id') id: number) {
+    const nev = modosultSuti.nev;
+    const ar = modosultSuti.ar;
+    const leiras = modosultSuti.leiras;
+    
+    const [adatok] = await conn.execute(
+      'UPDATE sutemenyek SET nev = ?, ar = ?, leiras = ? WHERE id = ?', [nev, ar, leiras, id]);
+
+    return {modosultSuti};
+  }
+
 }
