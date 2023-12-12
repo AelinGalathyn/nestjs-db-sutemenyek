@@ -4,29 +4,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Új sütemény</title>
+  <title>Módosítás</title>
 </head>
 
 <body>
-  <form method="post" action="/ujSutik">
+  <form method="post" action="/sutemenyek/<%= modositando.id %>?_method=PUT">
     <div>
       <label for="nev">Név</label>
-      <input type="text" name="nev" default="<%= modositando.nev %>">
+      <input type="text" name="nev" value="<%= modositando.nev %>">
     </div>
 
     <div>
       <label for="ar">Ár</label>
-      <input type="number" name="ar" default="<%= tryParse(modositando.ar) %>">
+      <input type="number" name="ar" value="<%= parseInt(modositando.ar) %>">
     </div>
 
     <div>
       <label for="leiras">Leírás</label>
-      <input type="text" name="leiras" default="<%= modositando.leiras %>">
+      <input type="text" name="leiras" value="<%= modositando.leiras %>">
     </div>
 
     <div>
-      <input type="submit"">
+      <input type="submit">
     </div>
+  </form>
+
+  <form method="post" action="/sutemenyek/<%= modositando.id %>?_method=DELETE">
+    <button type="submit">Törlés</button>
   </form>
 </body>
 

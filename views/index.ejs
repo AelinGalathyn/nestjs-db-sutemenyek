@@ -10,6 +10,7 @@
 </head>
 <body>
     <h1>Sütemények</h1>
+    <button onclick="window.location.href = '/ujSuti'" type="button">Új süti</button>
     <ul>
       <% sutemenyek.forEach((suti) => { %>
         <li>
@@ -19,7 +20,7 @@
           <form method="post" action="/sutemenyek/<%= suti.id %>?_method=DELETE">
             <button type="submit">Törlés</button>
           </form>
-          <form method="post" action="/sutemenyek/modosit/<%= suti.id %>">
+          <form method="get" action="/modosit/<%= suti.id %>">
             <button type="submit">Módosítás</button>
           </form>
         </li>
